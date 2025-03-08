@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-*fag-!ag*8ybn!n2zlj272-e_5$a&har3hi_!$k3enokjdat^6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGIN = ['http://*.on-acorn.io', 'https://*.on-acorn.io']
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -104,8 +105,8 @@ WSGI_APPLICATION = 'CustomUserModel.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
+        'NAME': 'healthcare',
+        'USER': 'mazn',
         'PASSWORD': 'Mazenmezo2003@',
         'HOST': '127.0.0.1',  # '127.0.0.1' for local
         'PORT': '5432',       # Default PostgreSQL port

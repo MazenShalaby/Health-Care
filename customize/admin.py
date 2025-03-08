@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django import forms
 from .models import (
-    Profile, DoctorsProfileInfo, Booking_Appointments, 
+    Profile,DoctorsProfileInfo, Booking_Appointments, 
     PreviousHistory, UploadedPhoto, DoctorAvailability, Alarm
 )
 from django.contrib.auth import get_user_model
@@ -176,17 +176,17 @@ admin.site.register(Booking_Appointments, BookAppointmentAdmin)
 
 # DoctorAvailability Admin
 class DoctorAvailabilityAdmin(admin.ModelAdmin):
-    list_display = ['doctor','start_time','end_time']
+    list_display = ['doctor', 'start_time', 'end_time']
     list_filter = ['doctor']
-    search_fields = ['doctor__doc_first_name', 'doctor__doc_last_name']
+    search_fields = ['doctor__email']  # Use 'doctor__email' for searching
     ordering = ['doctor']
     list_per_page = 10  # Optional: Controls how many items to display per page
-    
+
     # Customizing the form to filter doctors based on specific permissions
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "doctor":
             # Only allow doctors that have the correct permissions
-            kwargs["queryset"] = DoctorsProfileInfo.objects.filter(user__admin=False, user__staff=True, user__active=True)
+            kwargs["queryset"] = User.objects.filter(admin=False, staff=True, active=True)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def save_model(self, request, obj, form, change):

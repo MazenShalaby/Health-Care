@@ -125,7 +125,7 @@ class Profile(models.Model):
 ##################################################################################################################
 
 class DoctorsProfileInfo(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='doctor_profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, limit_choices_to={'staff': True, 'admin': False, 'active': True}, related_name='doctor_profile')
     doc_first_name = models.CharField(max_length=100)
     doc_last_name = models.CharField(max_length=100)
     specialty = models.CharField(max_length=100)
@@ -167,7 +167,7 @@ class DoctorsProfileInfo(models.Model):
 ############################################################## [3] Doctor Availability ##########################################################################################################################################################################################
 
 class DoctorAvailability(models.Model):
-    doctor = models.ForeignKey(DoctorsProfileInfo, on_delete=models.CASCADE)
+    doctor = models.ForeignKey(User, limit_choices_to={'staff':True, 'admin':False, 'active':True}, on_delete=models.CASCADE)
     department = models.CharField(
         max_length=100,
         choices = [
