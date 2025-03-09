@@ -223,28 +223,53 @@ class Booking_Appointments(models.Model):
         super().save(*args, **kwargs)
 
 ############################################################################# [Badr's Model] ###################################################################################################################################################################################################################################################
-from django.contrib.postgres.fields import ArrayField
+# from django.contrib.postgres.fields import ArrayField
+
+# class PreviousHistory(models.Model):
+#     sender = models.ForeignKey(
+#         User, on_delete=models.CASCADE, null=False, blank=True, related_name="messages", default=None
+#     )
+#     receiver = models.ForeignKey(
+#         User, on_delete=models.CASCADE, null=False, blank=True, related_name="received_messages", default=None
+#     )
+#     message = models.TextField(max_length=100, blank=False, null=True)
+#     date = models.DateField(blank=False, null=False, default=None)
+#     time = models.TimeField(blank=False, null=True)
+    
+#     # Store multiple image URLs in an array
+#     images = models.ImageField(models.CharField(max_length=255), blank=True, null=True)
+
+#     created_at = models.DateTimeField(blank=True, null=True, auto_now_add=True)   
+#     updated_at = models.DateTimeField(blank=True, null=True, auto_now=True)  
+
+#     def __str__(self):
+#         return f"{self.sender.email if self.sender else 'Anonymous'}: {self.message[:20]}"
 
 class PreviousHistory(models.Model):
     sender = models.ForeignKey(
-        User, on_delete=models.CASCADE, null=False, blank=True, related_name="messages", default=None
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="messages"
     )
     receiver = models.ForeignKey(
-        User, on_delete=models.CASCADE, null=False, blank=True, related_name="received_messages", default=None
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="received_messages"
     )
     message = models.TextField(max_length=100, blank=False, null=True)
     date = models.DateField(blank=False, null=False, default=None)
     time = models.TimeField(blank=False, null=True)
-    
-    # Store multiple image URLs in an array
-    images = ArrayField(models.CharField(max_length=255), blank=True, null=True)
+    img = models.ImageField(upload_to='previous_history/', blank=True, null=True)
 
     created_at = models.DateTimeField(blank=True, null=True, auto_now_add=True)   
     updated_at = models.DateTimeField(blank=True, null=True, auto_now=True)  
 
     def __str__(self):
         return f"{self.sender.email if self.sender else 'Anonymous'}: {self.message[:20]}"
-
 #######################################################################################################################################################################################################################################################################################################
 
 class UploadedPhoto(models.Model):
