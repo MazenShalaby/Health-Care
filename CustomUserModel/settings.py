@@ -24,10 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-*fag-!ag*8ybn!n2zlj272-e_5$a&har3hi_!$k3enokjdat^6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGIN = ['http://*.on-acorn.io', 'https://*.on-acorn.io']
+ALLOWED_HOSTS = ['mazenwaleed.pythonanywhere.com']
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -41,17 +40,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # Apps
     'customize',
-    
+
     # Auth Token
     'rest_framework.authtoken',
-    
-    # API    
+
+    # API
     'rest_framework',
     'corsheaders',
-    
+
     # browser reload
     'django_browser_reload',
 ]
@@ -65,11 +64,11 @@ AUTH_USER_MODEL = 'customize.User' # This changes [Build-in Django User Model] =
 
 MIDDLEWARE = [
     'django_browser_reload.middleware.BrowserReloadMiddleware',
-    
+
     'django.middleware.security.SecurityMiddleware',
-    
+
     "corsheaders.middleware.CorsMiddleware",
-    
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -98,20 +97,54 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'CustomUserModel.wsgi.application'
 
+import pymysql
+pymysql.install_as_MySQLdb()
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'healthcare',
+#         'USER': 'mazn',
+#         'PASSWORD': 'Mazenmezo2003@',
+#         'HOST': '127.0.0.1',  # '127.0.0.1' for local
+#         'PORT': '5432',       # Default PostgreSQL port
+#     }
+# }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',  # MySQL database engine
+#         'NAME': 'healthcare',  # Replace with your database name
+#         'USER': 'mazn',  # Replace with your MySQL username
+#         'PASSWORD': 'Mazenmezo2003@',  # Replace with your MySQL password
+#         'HOST': 'localhost',  # Use '127.0.0.1' if 'localhost' doesn't work
+#         'PORT': '3306',  # Default MySQL port
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+#         }
+#     }
+# }
+
+
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'healthcare',
-        'USER': 'mazn',
-        'PASSWORD': 'Mazenmezo2003@',
-        'HOST': '127.0.0.1',  # '127.0.0.1' for local
-        'PORT': '5432',       # Default PostgreSQL port
+        'ENGINE': 'django.db.backends.mysql',  # MySQL database engine
+        'NAME': 'MazenWaleed$mw',  # Replace with your database name
+        'USER': 'MazenWaleed',  # Replace with your MySQL username
+        'PASSWORD': 'Mazenmezo2003@',  # Replace with your MySQL password
+        'HOST': 'MazenWaleed.mysql.pythonanywhere-services.com',  # Use '127.0.0.1' if 'localhost' doesn't work
+        'PORT': '3306',  # Default MySQL port
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+            }
     }
 }
+
 
 # DATABASES = {
 #     'default': {
@@ -156,7 +189,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'  # URL for serving media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory where uploaded files will be stored
